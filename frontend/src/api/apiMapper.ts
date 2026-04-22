@@ -3,7 +3,7 @@ import type {
   BackendProfileResponse,
   CurrentUser,
   UserProfile,
-} from "../types/api";
+} from "@/types/api";
 
 export function mapProfileResponse(
   response: BackendProfileResponse

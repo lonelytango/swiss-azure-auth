@@ -1,9 +1,9 @@
 import { LogIn, LogOut, ShieldCheck } from "lucide-react";
 import { useEffect, useState } from "react";
-import { ApiError, getCurrentUser, getUserProfile } from "./api/client";
-import { ProtectedRoute } from "./components/ProtectedRoute";
-import { useAuth } from "./providers/auth-context";
-import type { CurrentUser, UserProfile } from "./types/api";
+import { ApiError, getCurrentUser, getUserProfile } from "@api/client";
+import { ProtectedRoute } from "@components/ProtectedRoute";
+import { useAuth } from "@providers/auth-context";
+import type { CurrentUser, UserProfile } from "@/types/api";
 
 function App() {
   const { user, accessToken, error, isAuthenticated, signIn, signOut } =

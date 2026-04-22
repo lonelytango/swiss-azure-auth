@@ -1,11 +1,11 @@
-import { mapCurrentUserResponse, mapProfileResponse } from "./apiMapper";
+import { mapCurrentUserResponse, mapProfileResponse } from "@api/apiMapper";
 import type {
   ApiResponse,
   BackendMeResponse,
   BackendProfileResponse,
   CurrentUser,
   UserProfile,
-} from "../types/api";
+} from "@/types/api";
 
 export class ApiError extends Error {
   status: number;
@@ -23,10 +23,10 @@ async function parseApiResponse<T>(
   const payload = (await response.json()) as ApiResponse<T>;
 
   if (!response.ok || !payload.success) {
-    const errorMessage =
-      !payload.success && payload.error?.message
-        ? payload.error.message
-        : `${label} request failed: ${response.status}`;
+    let errorMessage = `${label} request failed: ${response.status}`;
+    if ("error" in payload && payload.error?.message) {
+      errorMessage = payload.error.message;
+    }
     throw new ApiError(errorMessage, response.status);
   }
 

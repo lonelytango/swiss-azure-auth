@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { ApiError, getCurrentUser, getUserProfile } from "./client";
+import { getCurrentUser, getUserProfile } from "@api/client";
 
 describe("api client", () => {
   afterEach(() => {
@@ -43,7 +43,7 @@ describe("api client", () => {
     } as Response);
 
     await expect(getCurrentUser("token-2")).rejects.toEqual(
-      expect.objectContaining<ApiError>({
+      expect.objectContaining({
         message: "Invalid token",
         status: 401,
       })

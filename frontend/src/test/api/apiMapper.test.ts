@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { mapCurrentUserResponse, mapProfileResponse } from "./apiMapper";
+import { mapCurrentUserResponse, mapProfileResponse } from "@api/apiMapper";
 
 describe("apiMapper", () => {
   it("maps profile payload to frontend shape", () => {

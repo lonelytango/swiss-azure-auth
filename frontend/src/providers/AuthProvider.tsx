@@ -5,12 +5,12 @@ import {
 } from "@azure/msal-browser";
 import { MsalProvider, useIsAuthenticated, useMsal } from "@azure/msal-react";
 import { useEffect, useMemo, useState } from "react";
-import { loginRequest, msalConfig } from "../auth/msalConfig";
+import { loginRequest, msalConfig } from "@auth/msalConfig";
 import {
   AuthContext,
   type AuthContextValue,
   type UserData,
-} from "./auth-context";
+} from "@providers/auth-context";
 
 const msalInstance = new PublicClientApplication(msalConfig);
 
