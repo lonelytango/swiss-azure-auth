@@ -1,10 +1,10 @@
-import 'dotenv/config'
-import { createApp } from './app.js'
+import "dotenv/config";
+import { createApp } from "./app.js";
 
-const port = Number(process.env.PORT ?? 3001)
-const frontendOrigin = process.env.FRONTEND_ORIGIN ?? 'http://localhost:5173'
-const app = createApp(frontendOrigin)
+const port = Number(process.env.PORT ?? 3001);
+const frontendOrigin = process.env.FRONTEND_ORIGIN ?? "http://localhost:5173";
+const app = createApp(frontendOrigin);
 
 app.listen(port, () => {
-  console.log(`Backend listening on http://localhost:${port}`)
-})
+  console.log(`Backend listening on http://localhost:${port}`);
+});

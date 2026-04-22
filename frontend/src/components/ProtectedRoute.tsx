@@ -1,15 +1,15 @@
-import type { ReactNode } from 'react'
-import { useAuth } from '../providers/auth-context'
+import type { ReactNode } from "react";
+import { useAuth } from "../providers/auth-context";
 
 interface ProtectedRouteProps {
-  children: ReactNode
+  children: ReactNode;
 }
 
 export function ProtectedRoute({ children }: ProtectedRouteProps) {
-  const { isLoading, isAuthenticated, signIn } = useAuth()
+  const { isLoading, isAuthenticated, signIn } = useAuth();
 
   if (isLoading) {
-    return <p className="text-slate-600">Loading authentication...</p>
+    return <p className="text-slate-600">Loading authentication...</p>;
   }
 
   if (!isAuthenticated) {
@@ -24,8 +24,8 @@ export function ProtectedRoute({ children }: ProtectedRouteProps) {
           Sign in again
         </button>
       </div>
-    )
+    );
   }
 
-  return <>{children}</>
+  return <>{children}</>;
 }

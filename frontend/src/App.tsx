@@ -1,47 +1,50 @@
-import { LogIn, LogOut, ShieldCheck } from 'lucide-react'
-import { useEffect, useState } from 'react'
-import { ApiError, getCurrentUser, getUserProfile } from './api/client'
-import { ProtectedRoute } from './components/ProtectedRoute'
-import { useAuth } from './providers/auth-context'
-import type { CurrentUser, UserProfile } from './types/api'
+import { LogIn, LogOut, ShieldCheck } from "lucide-react";
+import { useEffect, useState } from "react";
+import { ApiError, getCurrentUser, getUserProfile } from "./api/client";
+import { ProtectedRoute } from "./components/ProtectedRoute";
+import { useAuth } from "./providers/auth-context";
+import type { CurrentUser, UserProfile } from "./types/api";
 
 function App() {
-  const { user, accessToken, error, isAuthenticated, signIn, signOut } = useAuth()
-  const [profile, setProfile] = useState<UserProfile | null>(null)
-  const [currentUser, setCurrentUser] = useState<CurrentUser | null>(null)
-  const [apiError, setApiError] = useState<string | null>(null)
-  const [needsReauth, setNeedsReauth] = useState(false)
+  const { user, accessToken, error, isAuthenticated, signIn, signOut } =
+    useAuth();
+  const [profile, setProfile] = useState<UserProfile | null>(null);
+  const [currentUser, setCurrentUser] = useState<CurrentUser | null>(null);
+  const [apiError, setApiError] = useState<string | null>(null);
+  const [needsReauth, setNeedsReauth] = useState(false);
 
   useEffect(() => {
     const loadData = async () => {
       if (!accessToken) {
-        setProfile(null)
-        setCurrentUser(null)
-        setNeedsReauth(false)
-        return
+        setProfile(null);
+        setCurrentUser(null);
+        setNeedsReauth(false);
+        return;
       }
 
       try {
-        setApiError(null)
-        setNeedsReauth(false)
+        setApiError(null);
+        setNeedsReauth(false);
         const [nextProfile, nextCurrentUser] = await Promise.all([
           getUserProfile(accessToken),
           getCurrentUser(accessToken),
-        ])
-        setProfile(nextProfile)
-        setCurrentUser(nextCurrentUser)
+        ]);
+        setProfile(nextProfile);
+        setCurrentUser(nextCurrentUser);
       } catch (err) {
         if (err instanceof ApiError && err.status === 401) {
-          setNeedsReauth(true)
-          setApiError('Session expired. Please sign in again.')
-          return
+          setNeedsReauth(true);
+          setApiError("Session expired. Please sign in again.");
+          return;
         }
-        setApiError(err instanceof Error ? err.message : 'Profile load failed.')
+        setApiError(
+          err instanceof Error ? err.message : "Profile load failed."
+        );
       }
-    }
+    };
 
-    void loadData()
-  }, [accessToken])
+    void loadData();
+  }, [accessToken]);
 
   return (
     <main className="mx-auto flex min-h-screen w-full max-w-3xl items-center justify-center p-6">
@@ -67,18 +70,22 @@ function App() {
         <ProtectedRoute>
           <div className="mb-6 rounded-md bg-slate-50 p-4 text-sm text-slate-700 ring-1 ring-slate-200">
             <p>
-              <span className="font-medium">Signed in:</span>{' '}
-              {isAuthenticated ? user.email || `${user.firstName} ${user.lastName}`.trim() : 'No'}
+              <span className="font-medium">Signed in:</span>{" "}
+              {isAuthenticated
+                ? user.email || `${user.firstName} ${user.lastName}`.trim()
+                : "No"}
             </p>
             <p className="mt-1">
-              <span className="font-medium">Current user endpoint:</span>{' '}
+              <span className="font-medium">Current user endpoint:</span>{" "}
               {currentUser
                 ? `${currentUser.displayName} (${currentUser.email})`
-                : 'Unavailable'}
+                : "Unavailable"}
             </p>
             <p className="mt-1">
-              <span className="font-medium">Backend profile:</span>{' '}
-              {profile ? `${profile.displayName} (${profile.tenantId})` : 'Unavailable'}
+              <span className="font-medium">Backend profile:</span>{" "}
+              {profile
+                ? `${profile.displayName} (${profile.tenantId})`
+                : "Unavailable"}
             </p>
           </div>
         </ProtectedRoute>
@@ -106,7 +113,7 @@ function App() {
         </div>
       </section>
     </main>
-  )
+  );
 }
 
-export default App
+export default App;

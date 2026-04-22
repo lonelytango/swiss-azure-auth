@@ -8,10 +8,14 @@
     "dev:frontend": "npm run dev --prefix frontend",
     "dev:backend": "npm run dev --prefix backend",
     "build": "npm run build --prefix frontend && npm run build --prefix backend",
-    "test": "npm run test --prefix frontend && npm run test --prefix backend"
+    "test": "npm run test --prefix frontend && npm run test --prefix backend",
+    "format": "prettier . --write",
+    "format:check": "prettier . --check"
   },
   "keywords": [],
   "devDependencies": {
-    "concurrently": "^9.2.1"
+    "concurrently": "^9.2.1",
+    "prettier": "^3.8.3",
+    "prettier-plugin-tailwindcss": "^0.7.2"
   }
 }

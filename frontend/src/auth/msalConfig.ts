@@ -1,14 +1,17 @@
-import { LogLevel, type Configuration } from '@azure/msal-browser'
+import { LogLevel, type Configuration } from "@azure/msal-browser";
 
-const clientId = import.meta.env.VITE_AZURE_CLIENT_ID || import.meta.env.VITE_CLIENT_ID
-const tenantId = import.meta.env.VITE_AZURE_TENANT_ID || import.meta.env.VITE_TENANT_ID
+const clientId =
+  import.meta.env.VITE_AZURE_CLIENT_ID || import.meta.env.VITE_CLIENT_ID;
+const tenantId =
+  import.meta.env.VITE_AZURE_TENANT_ID || import.meta.env.VITE_TENANT_ID;
 const redirectUri =
-  import.meta.env.VITE_AZURE_REDIRECT_URI || import.meta.env.VITE_REDIRECT_URI
-const postLogoutRedirectUri = import.meta.env.VITE_POST_LOGOUT_REDIRECT_URI
-const authorityHost = import.meta.env.VITE_AZURE_AUTHORITY_HOST || 'login.microsoftonline.com'
+  import.meta.env.VITE_AZURE_REDIRECT_URI || import.meta.env.VITE_REDIRECT_URI;
+const postLogoutRedirectUri = import.meta.env.VITE_POST_LOGOUT_REDIRECT_URI;
+const authorityHost =
+  import.meta.env.VITE_AZURE_AUTHORITY_HOST || "login.microsoftonline.com";
 
 if (!tenantId || !clientId || !redirectUri) {
-  throw new Error('Missing MSAL environment variables in frontend .env file.')
+  throw new Error("Missing MSAL environment variables in frontend .env file.");
 }
 
 export const msalConfig: Configuration = {
@@ -19,35 +22,35 @@ export const msalConfig: Configuration = {
     postLogoutRedirectUri,
   },
   cache: {
-    cacheLocation: 'sessionStorage',
+    cacheLocation: "sessionStorage",
   },
   system: {
     loggerOptions: {
       loggerCallback: (level, message, containsPii) => {
         if (containsPii) {
-          return
+          return;
         }
         switch (level) {
           case LogLevel.Error:
-            console.error(message)
-            return
+            console.error(message);
+            return;
           case LogLevel.Info:
-            console.info(message)
-            return
+            console.info(message);
+            return;
           case LogLevel.Verbose:
-            console.debug(message)
-            return
+            console.debug(message);
+            return;
           case LogLevel.Warning:
-            console.warn(message)
-            return
+            console.warn(message);
+            return;
           default:
-            return
+            return;
         }
       },
     },
   },
-}
+};
 
 export const loginRequest = {
-  scopes: ['User.Read'],
-}
+  scopes: ["User.Read"],
+};
