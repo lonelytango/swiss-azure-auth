@@ -4,6 +4,7 @@ Monorepo scaffold with:
 
 - `frontend`: Vite + React + TypeScript + Tailwind + MSAL auth provider
 - `backend`: Express + TypeScript API with Azure JWT validation
+- `mobile`: Expo + React Native + Azure auth flow
 
 ## Prerequisites
 
@@ -14,7 +15,8 @@ Monorepo scaffold with:
 
 - `frontend`: UI + MSAL login flow (`User.Read`)
 - `backend`: protected API endpoints with JWT validation
-- root `package.json`: concurrent dev scripts for both apps
+- `mobile`: React Native app using Azure sign-in + protected API call
+- root `package.json`: monorepo scripts
 
 ## Setup
 
@@ -29,6 +31,7 @@ Install workspace dependencies (if needed on a fresh clone):
 ```bash
 npm install --prefix frontend
 npm install --prefix backend
+npm install --prefix mobile
 ```
 
 ## Configure environment
@@ -68,6 +71,19 @@ Optional values:
 - `PORT`
 - `FRONTEND_ORIGIN`
 
+### Mobile
+
+```bash
+cp mobile/.env.example mobile/.env
+```
+
+Required values:
+
+- `EXPO_PUBLIC_AZURE_TENANT_ID`
+- `EXPO_PUBLIC_AZURE_CLIENT_ID`
+- `EXPO_PUBLIC_AZURE_REDIRECT_URI`
+- `EXPO_PUBLIC_BACKEND_BASE_URL`
+
 ## Run locally
 
 Run frontend + backend together:
@@ -81,6 +97,7 @@ Or run separately:
 ```bash
 npm run dev:frontend
 npm run dev:backend
+npm run dev:mobile
 ```
 
 Open `http://localhost:5173` and sign in.
