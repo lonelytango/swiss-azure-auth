@@ -10,38 +10,91 @@ Monorepo scaffold with:
 - Node.js 20+
 - Azure app registration with SPA redirect URI (`http://localhost:5173`)
 
-## Run locally
+## Project structure
 
-### 1) Configure env files
+- `frontend`: UI + MSAL login flow (`User.Read`)
+- `backend`: protected API endpoints with JWT validation
+- root `package.json`: concurrent dev scripts for both apps
 
-Frontend:
+## Setup
+
+Install root dependencies:
+
+```bash
+npm install
+```
+
+Install workspace dependencies (if needed on a fresh clone):
+
+```bash
+npm install --prefix frontend
+npm install --prefix backend
+```
+
+## Configure environment
+
+### Frontend
 
 ```bash
 cp frontend/.env.example frontend/.env
 ```
 
-Backend:
+Required values:
+
+- `VITE_AZURE_TENANT_ID`
+- `VITE_AZURE_CLIENT_ID`
+- `VITE_AZURE_REDIRECT_URI`
+
+Optional values:
+
+- `VITE_POST_LOGOUT_REDIRECT_URI`
+- `VITE_AZURE_AUTHORITY_HOST` (example: `login.microsoftonline.us`)
+
+### Backend
 
 ```bash
 cp backend/.env.example backend/.env
 ```
 
-Fill in the Azure values in both files.
+Required values:
 
-### 2) Start backend
+- `AZURE_TENANT_ID`
+- `AZURE_CLIENT_ID`
+
+Optional values:
+
+- `AZURE_AUDIENCE`
+- `AZURE_AUTHORITY_HOST`
+- `PORT`
+- `FRONTEND_ORIGIN`
+
+## Run locally
+
+Run frontend + backend together:
 
 ```bash
-cd backend
-npm install
 npm run dev
 ```
 
-### 3) Start frontend
+Or run separately:
 
 ```bash
-cd frontend
-npm install
-npm run dev
+npm run dev:frontend
+npm run dev:backend
 ```
 
-Open `http://localhost:5173` and sign in. The frontend sends the bearer token on `/api/profile`, and the backend validates it before returning data.
+Open `http://localhost:5173` and sign in.
+
+## API response format
+
+All endpoints use a lean envelope:
+
+- Success: `{ "success": true, "data": ... }`
+- Failure: `{ "success": false, "data": null, "error": { "code", "message", "details?" } }`
+
+## Available backend endpoints
+
+- `GET /api/health` (public)
+- `GET /api/profile` (protected)
+- `GET /api/me` (protected)
+- `GET /api/mock-data` (protected, random mock array)
